@@ -53,13 +53,13 @@ module = @
 #   # ASS_BOOL_OR  : ''
 #   # ASS_BOOL_XOR : ''
 #   
-#   EQ : '=='
-#   NE : '!='
-#   GT : '>'
-#   LT : '<'
-#   GTE: '>='
-#   LTE: '<='
-# 
+  EQ : '=='
+  NE : '!='
+  GT : '>'
+  LT : '<'
+  GTE: '>='
+  LTE: '<='
+
 @bin_op_name_cb_map =
 #   BOOL_XOR      : (a, b)->"(#{a} ^ #{b})"
 #   ASS_BOOL_AND  : (a, b)->"(#{a} = !!(#{a} & #{b}))"
