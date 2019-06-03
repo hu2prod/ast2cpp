@@ -126,8 +126,10 @@ class @Gen_context
       _b = gen ast.b, opt, ctx
       if op = module.bin_op_name_map[ast.op]
         "(#{_a} #{op} #{_b})"
+      else if cb = module.bin_op_name_cb_map[ast.op]
+        cb(_a, _b)
       else
-        module.bin_op_name_cb_map[ast.op](_a, _b)
+        throw new Error "Unknown/unimplemented bin_op #{ast.op}"
     
     when "Un_op"
       module.un_op_name_cb_map[ast.op] gen ast.a, opt, ctx
