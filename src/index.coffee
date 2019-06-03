@@ -13,8 +13,8 @@ module = @
 # 
 @bin_op_name_map =
   ADD : '+'
-#   SUB : '-'
-#   MUL : '*'
+  SUB : '-'
+  MUL : '*'
 #   DIV : '/'
 #   DIV_INT : '//'
 #   MOD : '%'
@@ -28,8 +28,8 @@ module = @
 #   BOOL_OR  : '||'
 #   # BOOL_XOR : '^'
 #   
-#   SHR : '>>'
-#   SHL : '<<'
+  SHR : '>>'
+  SHL : '<<'
 #   LSR : '>>>' # логический сдвиг вправо >>>
 #   
 #   ASSIGN : '='
