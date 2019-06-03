@@ -382,7 +382,7 @@ class @Gen_context
     #     """
     else
       if opt.next_gen?
-        return opt.next_gen root
+        return opt.next_gen ast, opt, ctx
       ### !pragma coverage-skip-block ###
       perr ast
       throw new Error "unknown ast.constructor.name=#{ast.constructor.name}"
