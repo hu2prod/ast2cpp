@@ -66,7 +66,7 @@ describe 'index section', ()->
   it '1', ()->
     scope = new ast.Scope
     scope.list.push ci('1')
-    assert.equal gen(scope), "1"
+    assert.equal gen(scope), "1;"
     return
   # strings are not supported yet
   # it '"1"', ()->
@@ -78,7 +78,10 @@ describe 'index section', ()->
   it 'a', ()->
     scope = new ast.Scope
     scope.list.push var_d('a', scope)
-    assert.equal gen(scope), "int a;\na"
+    assert.equal gen(scope), """
+      int a;
+      a;
+      """
     return
   
   hash =
@@ -96,7 +99,10 @@ describe 'index section', ()->
         scope = new ast.Scope
         a = var_d('a', scope)
         scope.list.push un(a,k)
-        assert.equal gen(scope), "int a;\n#{v}"
+        assert.equal gen(scope), """
+          int a;
+          #{v};
+          """
         return
   
   hash =
@@ -116,7 +122,7 @@ describe 'index section', ()->
         assert.equal gen(scope), """
           int a;
           int b;
-          #{v}
+          #{v};
           """
         return
   # Array_init not supported yet
@@ -173,7 +179,6 @@ describe 'index section', ()->
   #   assert.equal gen(scope), '({"k": a}).k'
   #   return
   
-  ### START ###
   it 'a()', ()->
     scope = new ast.Scope
     a = var_d('a', scope, 'function<void>')
@@ -181,7 +186,7 @@ describe 'index section', ()->
     t.fn = a
     assert.equal gen(scope), '''
       function<void> a;
-      (a)()
+      (a)();
       '''
     return
   
@@ -195,14 +200,13 @@ describe 'index section', ()->
     assert.equal gen(scope), '''
       function<void, int> a;
       int b;
-      (a)(b)
+      (a)(b);
       '''
     return
-  ### END ###
-  return
   # ###################################################################################################
   #    stmt
   # ###################################################################################################
+  ### START ###
   it 'if a {b}', ()->
     scope = new ast.Scope
     a = var_d('a', scope)
@@ -211,8 +215,11 @@ describe 'index section', ()->
     t.cond = a
     t.t.list.push b
     assert.equal gen(scope), '''
-      if a
-        b
+      int a;
+      int b;
+      if (a) {
+        b;
+      };
     '''
     return
   
@@ -226,10 +233,14 @@ describe 'index section', ()->
     t.t.list.push b
     t.f.list.push c
     assert.equal gen(scope), '''
-      if a
-        b
-      else
-        c
+      int a;
+      int b;
+      int c;
+      if (a) {
+        b;
+      } else {
+        c;
+      };
     '''
     return
   
@@ -241,8 +252,13 @@ describe 'index section', ()->
     t.cond = a
     t.f.list.push c
     assert.equal gen(scope), '''
-      unless a
-        c
+      int a;
+      int c;
+      if (a) {
+        
+      } else {
+        c;
+      };
     '''
     return
   
@@ -260,12 +276,17 @@ describe 'index section', ()->
     t.t.list.push b
     t.f.list.push sub_if
     assert.equal gen(scope), '''
-      if a
-        b
-      else if a
-        b
+      int a;
+      int b;
+      if (a) {
+        b;
+      } else if (a) {
+        b;
+      };
     '''
     return
+  ### END ###
+  return
   # ###################################################################################################
   it 'switch a {k:b}', ()->
     scope = new ast.Scope

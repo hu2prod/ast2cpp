@@ -202,37 +202,36 @@ class @Gen_context
       jl = []
       for v in ast.list
         t = gen v, ctx
+        if t and t[t.length - 1] != ";"
+          t += ";"
         jl.push t if t != ''
       jl.join "\n"
     
-    # when "If"
-    #   cond = gen ast.cond, ctx
-    #   t = gen ast.t, ctx
-    #   f = gen ast.f, ctx
-    #   if f == ''
-    #     """
-    #     if #{cond}
-    #       #{make_tab t, '  '}
-    #     """
-    #   else if t == ''
-    #     """
-    #     unless #{cond}
-    #       #{make_tab f, '  '}
-    #     """
-    #   else
-    #     if ast.f.list[0]?.constructor.name == 'If'
-    #       """
-    #       if #{cond}
-    #         #{make_tab t, '  '}
-    #       else #{f}
-    #       """
-    #     else
-    #       """
-    #       if #{cond}
-    #         #{make_tab t, '  '}
-    #       else
-    #         #{make_tab f, '  '}
-    #       """
+    when "If"
+      cond = gen ast.cond, ctx
+      t = gen ast.t, ctx
+      f = gen ast.f, ctx
+      if f == ''
+        """
+        if (#{cond}) {
+          #{make_tab t, '  '}
+        }
+        """
+      else
+        if ast.f.list[0]?.constructor.name == 'If'
+          """
+          if (#{cond}) {
+            #{make_tab t, '  '}
+          } else #{f}
+          """
+        else
+          """
+          if (#{cond}) {
+            #{make_tab t, '  '}
+          } else {
+            #{make_tab f, '  '}
+          }
+          """
     # 
     # when "Switch"
     #   jl = []
@@ -336,7 +335,7 @@ class @Gen_context
         throw new Error "size not implemented"
       if ast.assign_value_list
         throw new Error "assign_value_list not implemented"
-      "#{ast.type} #{ast.name};"
+      "#{ast.type} #{ast.name}"
     # 
     # when "Class_decl"
     #   ctx_nest = ctx.mk_nest()
