@@ -47,7 +47,7 @@ module = @
 #   
 #   ASS_BIT_AND : '&='
 #   ASS_BIT_OR  : '|='
-#   ASS_BIT_XOR : '^='
+  ASS_BIT_XOR : '^='
 #   
 #   # ASS_BOOL_AND : ''
 #   # ASS_BOOL_OR  : ''
