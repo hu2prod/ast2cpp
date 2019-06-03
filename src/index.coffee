@@ -20,9 +20,9 @@ module = @
 #   MOD : '%'
 #   POW : '**'
 #   
-#   BIT_AND : '&'
-#   BIT_OR  : '|'
-#   BIT_XOR : '^'
+  BIT_AND : '&'
+  BIT_OR  : '|'
+  BIT_XOR : '^'
 #   
 #   BOOL_AND : '&&'
 #   BOOL_OR  : '||'
