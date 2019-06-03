@@ -32,7 +32,7 @@ module = @
   SHL : '<<'
 #   LSR : '>>>' # логический сдвиг вправо >>>
 #   
-#   ASSIGN : '='
+  ASSIGN : '='
 #   ASS_ADD : '+='
 #   ASS_SUB : '-='
 #   ASS_MUL : '*='
