@@ -207,33 +207,35 @@ class @Gen_context
         if t and t[t.length - 1] != ";"
           t += ";"
         jl.push t if t != ''
-      jl.join "\n"
+      """
+      {
+        #{join_list jl, '  '}
+      }
+      """
     
     when "If"
       cond = gen ast.cond, opt, ctx
       t = gen ast.t, opt, ctx
       f = gen ast.f, opt, ctx
-      if f == ''
+      empty_scope = """
+      {
+        
+      }
+      """
+      if f == empty_scope
         """
-        if (#{cond}) {
-          #{make_tab t, '  '}
-        }
+        if (#{cond}) #{t}
         """
       else
-        if ast.f.list[0]?.constructor.name == 'If'
-          """
-          if (#{cond}) {
-            #{make_tab t, '  '}
-          } else #{f}
-          """
-        else
-          """
-          if (#{cond}) {
-            #{make_tab t, '  '}
-          } else {
-            #{make_tab f, '  '}
-          }
-          """
+        # TEMP disabled
+        # if ast.f.list[0]?.constructor.name == 'If'
+          # """
+          # if (#{cond}) #{t} else #{f}
+          # """
+        # else
+        """
+        if (#{cond}) #{t} else #{f}
+        """
     # 
     # when "Switch"
     #   jl = []
