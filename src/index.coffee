@@ -331,14 +331,15 @@ class @Gen_context
     # 
     when "Var_decl"
       # TODO if ctx.in_class
-      if ast.assign_value
-        throw new Error "assign_value not implemented"
       if ast.assign_value_list
         throw new Error "assign_value_list not implemented"
       name = "#{ast.name}"
       if ast.size
         size = gen ast.size, opt, ctx
         name += "[#{size}]"
+      if ast.assign_value
+        value = gen ast.assign_value, opt, ctx
+        name += " = #{value}"
       
       "#{ast.type} #{name}"
     # 

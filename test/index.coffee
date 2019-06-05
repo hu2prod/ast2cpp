@@ -94,6 +94,16 @@ describe 'index section', ()->
       """
     return
   
+  it 'a = 1', ()->
+    scope = new ast.Scope
+    scope.list.push var_d('a', scope)
+    scope.list[0].assign_value = ci 1
+    assert.equal gen(scope), """
+      int a = 1;
+      a;
+      """
+    return
+  
   hash =
     PLUS    : "+(a)"
     INC_RET : "++(a)"
