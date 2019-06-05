@@ -333,11 +333,14 @@ class @Gen_context
       # TODO if ctx.in_class
       if ast.assign_value
         throw new Error "assign_value not implemented"
-      if ast.size
-        throw new Error "size not implemented"
       if ast.assign_value_list
         throw new Error "assign_value_list not implemented"
-      "#{ast.type} #{ast.name}"
+      name = "#{ast.name}"
+      if ast.size
+        size = gen ast.size, opt, ctx
+        name += "[#{size}]"
+      
+      "#{ast.type} #{name}"
     # 
     # when "Class_decl"
     #   ctx_nest = ctx.mk_nest()
